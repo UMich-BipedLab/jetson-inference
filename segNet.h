@@ -64,6 +64,7 @@ public:
 		SEGNET_CUSTOM
 	};
 
+
 	/**
 	 * Load a new network instance
 	 */
@@ -86,6 +87,7 @@ public:
 					       uint32_t maxBatchSize=2 );
 	
 
+	
 	/**
 	 * Load a new network instance by parsing the command line.
 	 */
@@ -107,6 +109,9 @@ public:
 	 * @returns true on success, false on error.
 	 */
 	bool Overlay( float* input, float* output, uint32_t width, uint32_t height, const char* ignore_class="void" );
+
+	/* the param list is the same as Overlay. The output is not mixed with the original image. Instead it is filled with class ids */
+	bool ForwardResult(float* input, uint8_t** output, uint32_t width, uint32_t height, const char* ignore_class="void" );
 	
 	/**
 	 * Find the ID of a particular class (by label name).
@@ -148,6 +153,8 @@ public:
  	 * Retrieve a string describing the network name.
 	 */
 	inline const char* GetNetworkName() const					{ return (mNetworkType != SEGNET_CUSTOM ? "FCN_Alexnet" : "segNet"); }
+
+	void DrawInColor(uint8_t * classMap, float * output, int height, int width);
 
 protected:
 	segNet();
